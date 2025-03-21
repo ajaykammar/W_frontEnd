@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "PT Serif", serif;
+  background-color: #eff5f8;
+}
+
+.bg_primary {
+  background: theme("colors.primary");
+}
+.button {
+  @apply bg-blue-500 text-white font-bold py-2 px-4 rounded-full;
+}
+.button:hover {
+  @apply bg-blue-700;
+}
+
+.slide-in {
+  @apply transition-transform duration-500;
+  transform: translateX(0);
+}
+.slide-out {
+  @apply transition-transform duration-500;
+  transform: translateX(-100%);
+}
