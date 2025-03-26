@@ -21,7 +21,7 @@ import Cart from "./pages/Cart";
 import WishList from "./pages/WishList";
 import ProductDetail from "./pages/ProductDetail";
 import Profile from "./pages/Profile";
-import MyOrders from "./components/Profile/Myorders";
+import MyOrders from "./components/Profile/MyOrders";
 import ProfileDetails from "./components/Profile/ProfileDetails";
 import ManageAddresses from "./components/Profile/ManageAddresses";
 import CheckOut from "./pages/CheckOut";
