@@ -1,5 +1,5 @@
 import React from "react";
-import BannerSlider from "../components/Sliders/BAnnerSlider";
+import BannerSlider from "../components/Sliders/BannerSlider";
 import CategoryDisplay from "../components/Catagry/CategoryDisplay";
 import ProductScrollDisplay from "../components/Prodcut/ProductScrollDisplay ";
 import ServiceList from "../components/ServiceList";
