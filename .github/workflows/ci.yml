@@ -46,10 +46,11 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: 22
+          debug: true
           script: |
             cd /var/www/html/E-com/W_frontEnd
             git pull origin main
-            npm install--force
+            npm install --force
             pm2 startOrReload ecosystem.config.js
 
       # Option B: Direct deployment on a Self-Hosted Runner (If runner is on the target server)
