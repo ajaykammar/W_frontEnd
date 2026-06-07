@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build-and-test:
@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -45,11 +45,11 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
-          port: ${{ secrets.VPS_PORT || 22 }}
+          port: 22
           script: |
-            cd /var/www/html/
+            cd /var/www/html/E-com/W_frontEnd
             git pull origin main
-            npm install
+            npm install--force
             pm2 startOrReload ecosystem.config.js
 
       # Option B: Direct deployment on a Self-Hosted Runner (If runner is on the target server)
@@ -64,4 +64,3 @@ jobs:
       #
       # - name: Start/Reload with PM2
       #   run: pm2 startOrReload ecosystem.config.js
-
