@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Build project
+        run: npm run build
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      # Option A: SSH Deployment to a remote server (Standard GitHub-hosted runner)
+      # Uncomment and configure the steps below if you are deploying to a remote server.
+      # Make sure to define SSH_HOST, SSH_USERNAME, and SSH_KEY (or SSH_PASSWORD) in your GitHub Repository Secrets.
+      - name: Deploy to Server via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT || 22 }}
+          script: |
+            cd /path/to/your/project-directory
+            git pull origin main
+            npm install
+            pm2 startOrReload ecosystem.config.js
+
+      # Option B: Direct deployment on a Self-Hosted Runner (If runner is on the target server)
+      # If you are using a self-hosted runner, change 'runs-on: ubuntu-latest' to 'runs-on: self-hosted'
+      # above, uncomment the steps below, and comment out the SSH step above.
+      #
+      # - name: Checkout code
+      #   uses: actions/checkout@v4
+      #
+      # - name: Install dependencies
+      #   run: npm install
+      #
+      # - name: Start/Reload with PM2
+      #   run: pm2 startOrReload ecosystem.config.js
+
